@@ -1,86 +1,46 @@
-import { View, Text, Input, Button, Image } from '@tarojs/components'
-import { useState } from 'react'
-import { AtTabBar, AtFab } from 'taro-ui'
+import { View } from '@tarojs/components'
+import { useState, useEffect } from 'react'
 import './index.scss'
-import WeeklyCard from '@/components/WeeklyCard'
+import Header from '@/components/Header'
+import SearchBar from '@/components/SearchBar'
+import BottomTabBar from '@/components/BottomTabBar'
+import FloatingActionButton from '@/components/FloatingActionButton'
+import ContentArea from '@/components/ContentArea'
+// 导入 getLocalTodoData 函数
+import { getLocalWeeklyData, setLocalWeeklyData, getLocalTodoData } from '@/utils/localData';
 
 export default function Home() {
   const [search, setSearch] = useState('')
   const [tab, setTab] = useState(0)
+  const [weeklyData, setWeeklyData] = useState(getLocalWeeklyData());
+  const [todoData, setTodoData] = useState(getLocalTodoData());
 
-  const weeklyData = [
-    {
-      week: 'W28',
-      items: [
-        { text: '去超市购买三明治', done: true },
-        { text: '去花店的买郁金香', done: false }
-      ]
-    }
-  ]
+  useEffect(() => {
+    const loadData = () => {
+      const localWeeklyData = getLocalWeeklyData();
+      const localTodoData = getLocalTodoData();
+      setWeeklyData(localWeeklyData);
+      setTodoData(localTodoData);
+    };
 
-  // 假设的待办数据
-  const todoData = [
-    { text: '完成报告', done: false },
-    { text: '参加会议', done: true }
-  ]
+    loadData();
+  }, []);
+
+  // 假设这里有一个添加周报数据的函数
+  const addWeeklyData = (newData: typeof weeklyData) => {
+    const updatedData = { ...weeklyData, ...newData };
+    setWeeklyData(updatedData);
+    // 存储更新后的数据到本地
+    setLocalWeeklyData(updatedData);
+  };
 
   return (
     <View className='home'>
-      {/* 顶部导航 */}
-      <View className='header'>
-        <Text className='title'>记事本</Text>
-        <View className='icons'>
-          <Image src='/assets/grid.png' className='icon' />
-          <Image src='/assets/setting.png' className='icon' />
-        </View>
-      </View>
-
-      {/* 搜索栏 */}
-      <View className='search-bar'>
-        <Input
-          placeholder='搜索'
-          value={search}
-          onInput={e => setSearch(e.detail.value)}
-        />
-      </View>
-
-      {/* 根据当前 Tab 显示不同内容 */}
-      <View className='content'>
-        {tab === 0 ? (
-          // 笔记页
-          <View className='weekly-list'>
-            {weeklyData.map(week => (
-              <WeeklyCard key={week.week} data={week} />
-            ))}
-          </View>
-        ) : (
-          // 待办页
-          <View className='todo-list'>
-            {todoData.map((todo, index) => (
-              <View key={index}>
-                <Text>{todo.text}</Text>
-                <Text>{todo.done ? '已完成' : '未完成'}</Text>
-              </View>
-            ))}
-          </View>
-        )}
-      </View>
-
-      {/* 底部Tab */}
-      <AtTabBar
-        fixed
-        tabList={[
-          { title: '记事本', iconType: 'bullet-list' },
-          { title: '待办', iconType: 'check-circle' }
-        ]}
-        onClick={setTab}
-        current={tab}
-      />
-
-      {/* 浮动按钮 */}
-      <AtFab className='fab'>
-        <Text>+</Text>
-      </AtFab>
+      <Header current={tab}  />
+      <SearchBar onSearch={setSearch} />
+      <ContentArea tab={tab} weeklyData={weeklyData} todoData={todoData} />
+      <BottomTabBar current={tab} onClick={setTab} />
+      <FloatingActionButton />
     </View>
   )
 }
