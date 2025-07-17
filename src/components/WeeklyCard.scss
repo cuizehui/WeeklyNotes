@@ -1,0 +1,27 @@
+.weekly-card {
+  background: #ffffff;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.05);
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-top: 20rpx;
+
+  .week {
+    font-weight: bold;
+    font-size: 32rpx;
+    margin-bottom: 12rpx;
+    color: #333;
+  }
+
+  .todo-item {
+    display: flex;
+    align-items: center;
+    margin-top: 8rpx;
+    font-size: 28rpx;
+    color: #666;
+
+    &.done {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+  }
+}
