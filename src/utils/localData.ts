@@ -97,3 +97,15 @@ export const moveTodoToNextWeek = (
 export const getAllTodos = (store: WeeklyDataStore): TodoItem[] => {
   return store.todos;
 };
+
+// 按周分组获取数据
+export const getWeeklyDataByWeek = (): { [week: number]: TodoItem[] } => {
+  const weeklyData = getLocalWeeklyData();
+  return weeklyData.todos.reduce((acc, todo) => {
+    if (!acc[todo.week]) {
+      acc[todo.week] = [];
+    }
+    acc[todo.week].push(todo);
+    return acc;
+  }, {} as { [week: number]: TodoItem[] });
+};

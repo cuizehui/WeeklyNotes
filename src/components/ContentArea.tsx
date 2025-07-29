@@ -1,23 +1,19 @@
-import { View, Text } from '@tarojs/components'
-import WeeklyCard from '@/components/WeeklyCard'
+import { View } from '@tarojs/components'
+import WeeklyList from './WeeklyList'
+import TodoList from './TodoList'
 
 interface ContentAreaProps {
   tab: number
+  todoData: any
 }
 
-export default function ContentArea({ tab, weeklyData, todoData }: ContentAreaProps) {
+export default function ContentArea({ tab, todoData }: ContentAreaProps) {
   return (
     <View className='content'>
       {tab === 0 ? (
-        // 笔记页
-        <View className='weekly-list'>
-        <Text>周记页</Text>
-        </View>
+        <WeeklyList />
       ) : (
-        // 待办页
-        <View className='todo-list'>
-          <Text>代办页</Text>
-        </View>
+        <TodoList todoData={todoData} />
       )}
     </View>
   )
