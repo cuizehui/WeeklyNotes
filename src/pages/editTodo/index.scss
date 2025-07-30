@@ -1,0 +1,43 @@
+.edit-todo {
+  padding: 20rpx;
+
+  .week-title {
+    font-size: 32rpx;
+    font-weight: bold;
+    margin-bottom: 20rpx;
+    display: block;
+  }
+
+  .todo-list {
+    margin-bottom: 20rpx;
+    border: 1rpx solid #eee;
+    border-radius: 8rpx;
+    padding: 10rpx;
+  }
+
+  .todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10rpx;
+    margin: 10rpx 0;
+    background-color: #f9f9f9;
+    border-radius: 4rpx;
+
+    .done {
+      text-decoration: line-through;
+      color: #999;
+    }
+  }
+
+  .new-todo {
+    margin-bottom: 20rpx;
+
+    input {
+      margin-bottom: 10rpx;
+      border: 1rpx solid #ddd;
+      padding: 10rpx;
+      border-radius: 4rpx;
+    }
+  }
+}

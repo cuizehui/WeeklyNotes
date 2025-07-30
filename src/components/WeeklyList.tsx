@@ -10,7 +10,6 @@ export default function WeeklyList() {
 
   return (
     <View className='weekly-list'>
-      <Text>周记列表</Text>
       {weeks.map(week => {
         const weekNumber = parseInt(week);
         const data = {
